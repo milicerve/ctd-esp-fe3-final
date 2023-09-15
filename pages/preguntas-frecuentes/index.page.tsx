@@ -8,7 +8,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Container } from '@mui/material';
 import BodySingle from "components/layouts/body/single/body-single";
 import { FaqsType } from 'interface/faqs';
-import LayoutGeneral from 'components/layouts/layout-general';
 
 
 interface Props {
