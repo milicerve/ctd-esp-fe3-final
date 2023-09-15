@@ -23,7 +23,7 @@ const Index: NextPage<Props> = ({comics}) => {
     const router = useRouter();
 
     const handleClickDetail = (id: string) =>{
-        router.push(`/comic/${id}`);
+        router.push(`/comics/${id}`);
     };
     const handleClickBuy = (id: string) =>{
         router.push(`/checkout/${id}`);

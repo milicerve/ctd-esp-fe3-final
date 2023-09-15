@@ -1,63 +1,45 @@
 import * as React from 'react';
 import Head from 'next/head'
-import BodySingle from "dh-marvel/components/layouts/body/single/body-single";
-import { GetServerSideProps, NextPage } from 'next';
-import { getCharacter} from 'dh-marvel/services/marvel/marvel.service';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Personaje } from 'interface/personajes';
+import LayoutGeneral from 'dh-marvel/components/layouts/layout-general'
+import { Personaje } from 'interface/personajes'
+import { getCharacter } from 'dh-marvel/services/marvel/marvel.service'
+import { GetServerSideProps, NextPage } from 'next'
+import { Box, Card } from '@mui/material';
+import Image from 'next/image';
 
-
-interface Props{
-    personaje: Personaje
+interface Props {
+    character: Personaje
 }
 
-const CharacterPage: NextPage<Props> = ({personaje}) => {
+const PersonajePage: NextPage<Props> = ({ character }) => {
+
     return (
-        <>
-
-            <Head>
-                <title>{personaje.name}</title>
-                <meta name="description" content={`Detalle de ${personaje.name}`}/>
-                <link rel="icon" href="/favicon.png"/>
-            </Head>
-
-            <BodySingle title={"Detalle del Personaje"}>
-                <Card sx={{ margin: "20px auto 50px", maxWidth:"1000px"}} >
-                    <CardMedia
-                        component="img"
-                        alt="Imagen del Personaje"
-                        height="450"
-                        width= "auto"
-                        image={`${personaje.thumbnail.path}.${personaje.thumbnail.extension}`}
+        <LayoutGeneral >
+            <Box >
+                <Card sx={{ marginTop: 10, padding: 3, gap: 10, height: "fit-content" }}>
+                    <div>{character.name}</div>
+                    <Image
+                        alt={character.name}
+                        src={character.thumbnail.path.concat(".", character.thumbnail.extension)}
+                        width={300}
+                        height={300}
                     />
-                    <CardContent>
-                        <Typography gutterBottom variant="h4" component="div">
-                            {personaje.name}
-                        </Typography>
-                        
-                        {personaje.description === null || personaje.description === ""  
-                        ? ""
-                        : <Typography gutterBottom variant="body1" component="div"><b>Descripción: </b> {personaje.description}</Typography> 
-                        } 
-                    </CardContent>
-
+                    <p>{character?.description}</p>
                 </Card>
-            </BodySingle> 
-        </>
+            </Box>
+        </LayoutGeneral>
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const id = Number(context.params?.id)
-    const personaje = await getCharacter(id);
-    return {
-        props:{
-            personaje,
-        }
-    };
-};
+export default PersonajePage;
 
-export default CharacterPage
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const id = Number(context.params?.id);
+    const character = await getCharacter(id)
+
+    return {
+        props: {
+            character
+        }
+    }
+}
