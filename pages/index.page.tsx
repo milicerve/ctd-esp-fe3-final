@@ -59,13 +59,13 @@ const Index: NextPage<Props> = ({comics}) => {
                                     </Typography>
                                 </CardContent>
                                 <CardActions sx={{justifyContent:'space-between', mt: "auto", mb:"5px", mx:"5px" }} >
-                                    <Button size="small" variant="outlined" onClick={()=>handleClickBuy(String(comic.id))}>
+                                    <Button size="small" onClick={()=>handleClickBuy(String(comic.id))}>
                                         <ShoppingCartIcon  fontSize="small"/>
                                         <Typography variant="body2" sx={{mt:'5px', ml:'5px'}}>
                                             Comprar
                                         </Typography>
                                     </Button>
-                                    <Button size="small" variant="outlined" onClick={()=>handleClickDetail(String(comic.id))} sx={{pt:'5px'}}>
+                                    <Button size="small" onClick={()=>handleClickDetail(String(comic.id))} sx={{pt:'5px'}}>
                                         Ver detalle
                                     </Button>
                                 </CardActions>
