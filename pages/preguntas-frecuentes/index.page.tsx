@@ -43,7 +43,7 @@ const Faqs: NextPage<Props> = ({ faqs }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
 
-    const response = await fetch('https://ctd-esp-fe3-final-three-fawn.vercel.app/api/faqs')
+    const response = await fetch(`https://ctd-esp-fe3-final-three-fawn.vercel.app/api/faqs`)
     const faqs = await response.json()
 
     return {
