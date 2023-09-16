@@ -134,7 +134,7 @@ export default function Forms({comic}:Props) {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Box sx={{ mt: 2, mb: 1 }}>             
                             {activeStep === 0 && <DataPersonal handleNext={handleNext} handlerCustomer={handleNext} />}
-                            {activeStep === 1 && <DataEntrega handleNext={handleNext} handlerAddress={handleNext2}/>}
+                            {activeStep === 1 && <DataEntrega handleNext={handleNext2} handlerAddress={handleNext2}/>}
                             {activeStep === 2 && <DataPago handlerCard={handleNext3}/>}
                     </Box>
 

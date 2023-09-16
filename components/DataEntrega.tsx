@@ -1,9 +1,8 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
 import { CustomTextField } from './input/CustomTextField';
 import { ErrorMessage } from '@hookform/error-message';
-import { Button } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schemaAddress } from 'rules';
 
@@ -17,16 +16,48 @@ const DataEntrega: FC<Props> = ({ handlerAddress }) => {
 
     const {
         control,
-        formState: { errors },
-        handleSubmit,
+        formState: { errors }
     } = useForm({ resolver: yupResolver(schemaAddress) })
 
-    const onSubmit = (data: any) => {
-        handlerAddress(data)
-    }
+    const [formData, setFormData] = useState({
+      address1: "",
+      address2: "",
+      city: "",
+      state: "",
+      zipCode: "",
+    });
+
+    const isFormComplete = () => {
+      return (
+          formData.address1 &&
+          formData.address2 &&
+          formData.city &&
+          formData.state &&
+          formData.zipCode
+      );
+  };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (isFormComplete()) {
+            handlerAddress(formData);
+            console.log(handlerAddress); 
+        } else {
+            console.log("Completa todos los campos antes de enviar.");
+        }
+    };
+
+    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit}>
             <Typography sx={{ paddingBottom: "1rem" }} variant="h4" align="center">
                 Direccion de Entrega
             </Typography>
@@ -40,6 +71,7 @@ const DataEntrega: FC<Props> = ({ handlerAddress }) => {
                 type="text"
                 control={control}
                 defaultValue=""
+                onFocus={handleFocus}
             />
             <Typography variant="caption" color="red">
                 <ErrorMessage errors={errors} name="address2" />
@@ -51,6 +83,7 @@ const DataEntrega: FC<Props> = ({ handlerAddress }) => {
                 type="text"
                 control={control}
                 defaultValue=""
+                onFocus={handleFocus}
             />
             <Typography variant="caption" color="red">
                 <ErrorMessage errors={errors} name="city" />
@@ -62,6 +95,7 @@ const DataEntrega: FC<Props> = ({ handlerAddress }) => {
                 type="text"
                 control={control}
                 defaultValue=""
+                onFocus={handleFocus}
             />
             <Typography variant="caption" color="red">
                 <ErrorMessage errors={errors} name="state" />
@@ -73,6 +107,7 @@ const DataEntrega: FC<Props> = ({ handlerAddress }) => {
                 type="text"
                 control={control}
                 defaultValue=""
+                onFocus={handleFocus}
             />
             <Typography variant="caption" color="red">
                 <ErrorMessage errors={errors} name="zipCode" />
@@ -84,11 +119,9 @@ const DataEntrega: FC<Props> = ({ handlerAddress }) => {
                 type="text"
                 control={control}
                 defaultValue=""
+                onFocus={handleFocus}
             />
-            {<Button variant="contained" type="submit">Siguiente</Button>}
         </form>
-
-
     )
 }
 

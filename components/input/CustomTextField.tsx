@@ -1,5 +1,6 @@
 import { TextField } from '@mui/material';
 import { Control, Controller } from 'react-hook-form';
+import { FocusEvent } from 'react';
 
 interface CustomTextFieldProps {
     name: string;
@@ -9,9 +10,10 @@ interface CustomTextFieldProps {
     control: Control<any>;
     defaultValue?: string;
     textFieldProps?: Record<string, any>;
+    onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
 }
 
-export const CustomTextField = ({name, label, type, required, control, defaultValue, textFieldProps}: CustomTextFieldProps) => {
+export const CustomTextField = ({name, label, type, required, control, defaultValue, textFieldProps, onFocus}: CustomTextFieldProps) => {
     return (
         <Controller
             name={name}
@@ -27,6 +29,9 @@ export const CustomTextField = ({name, label, type, required, control, defaultVa
                     required={required}
                     sx={{ mb: 2 }}
                     {...textFieldProps}
+                    onFocus={(e) => {
+                        onFocus?.(e as FocusEvent<HTMLInputElement>);
+                    }}
                 />
             )
             }
