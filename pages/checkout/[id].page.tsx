@@ -36,6 +36,7 @@ const CheckoutPage: NextPage<Props> = ({ comic }) => {
     if (comic.stock == 0) {
       router.push(`/comics/${router.query.id}`);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

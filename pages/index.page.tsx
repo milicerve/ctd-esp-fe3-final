@@ -16,7 +16,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useRouter } from "next/router";
 
 interface Props {
-  comics: Comics;
+  comics?: Comics;
 }
 
 const Index: NextPage<Props> = ({ comics }) => {
@@ -47,7 +47,7 @@ const Index: NextPage<Props> = ({ comics }) => {
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 4, sm: 8, md: 12, xl: 12 }}
           >
-            {comics.data.results.map((comic, index) => (
+            {comics?.data.results.map((comic, index) => (
               <Grid xs={4} sm={4} md={4} xl={3} key={comic.id}>
                 <Card
                   sx={{
