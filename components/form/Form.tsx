@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { postCheckOut } from 'dh-marvel/services/checkout/checkout-service'
 
 const steps = ["Datos Personales", "Dirección de entrega", "Datos del pago"];
 
@@ -52,6 +53,7 @@ export default function Forms({ comic }: Props) {
         lastname: data.lastName,
         email: data.email,
         address: {
+          address1: data.address1,
           address2: data.address1 || "invalid",
           city: data.city,
           state: data.state,
@@ -75,31 +77,25 @@ export default function Forms({ comic }: Props) {
   const onSubmit = async (data: any) => {
     const dataNormalizada = normalizedData(data);
     console.log(dataNormalizada);
-    const response = await fetch(`https://ctd-esp-fe3-final-three-fawn.vercel.app/api/checkout-orden`, {
-      method: "POST",
-      body: JSON.stringify(dataNormalizada),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    const responseApi = await response.json();
-    if (response.ok) {
+    try {
+      await postCheckOut(dataNormalizada);
       Cookies.set("accesoCompra", "true");
       router.push(
         {
           pathname: "/confirmacion-compra",
           query: {
-            comicName: responseApi.data.order.name,
-            comicImage: responseApi.data.order.image,
-            comicPrice: responseApi.data.order.price,
-            userAddress: responseApi.data.customer.address.address2,
+            comicName: data.order.name,
+            comicImage: data.order.image,
+            comicPrice: data.order.price,
+            userAddress: data.customer.address.address2,
           },
         },
         "/confirmacion-compra"
       );
-    } else {
-      setErrorMsg(responseApi.message);
+
+    } catch (error) {
+      console.error('API call error:', error);
+      setErrorMsg('API error');
     }
   };
 
