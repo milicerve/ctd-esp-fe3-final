@@ -75,7 +75,7 @@ export default function Forms({ comic }: Props) {
   const onSubmit = async (data: any) => {
     const dataNormalizada = normalizedData(data);
     console.log(dataNormalizada);
-    const response = await fetch(`https://ctd-esp-fe3-final-three-fawn.vercel.app/api/checkout`, {
+    const response = await fetch(`https://ctd-esp-fe3-final-three-fawn.vercel.app/api/checkout-orden`, {
       method: "POST",
       body: JSON.stringify(dataNormalizada),
       headers: {
