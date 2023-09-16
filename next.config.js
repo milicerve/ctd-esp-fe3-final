@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['dh-frontend.cdn.prismic.io',"i.annihil.us","marvel.com","gateway.marvel.com"],
+        domains: ['dh-frontend.cdn.prismic.io'],
     },
-    reactStrictMode: false,
+    reactStrictMode: true,
     swcMinify: true,
     //
     // Note: configuring pageExtensions also affects _document.js, _app.js,
